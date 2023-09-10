@@ -1,0 +1,80 @@
+## command to execute
+
+    - clone the repo (or) unzip the file
+    - npm install 
+    - npm start
+
+## unit test cases
+
+     folder  /test
+
+        GET -   fetch events
+        POST -  create a booking
+
+    - command "npm run test"    
+
+
+### REST APIs
+
+# GET
+
+- http://localhost:4000/events
+
+      Fetch all available events from sqlite DB.
+
+        - response format
+
+                    {
+                       "data": [
+                               {"day": 10, "event_id": 1, "location": "DIFC", "month": "JULY", "name": "FinTech Hub", "price": 250}
+                               {"day": 4, "event_id": 2, "location": "JLT", "month": "April", "name": "Crypto Valley", "price": 150},
+                       ],
+                       "message": "events list retrieved successfully",
+                       "success": true
+                   }
+
+# POST
+
+- http://localhost:4000/users
+
+        1. Create a booking and store in database.
+        2. Sends a message to kafka topic via producer
+        3. Consumer receives a message later then sends a mail to the email
+
+        - request parameters
+
+           {
+               "event_id": 1,      // type-> Integer
+               "no_of_bookings": 3,     // type-> Integer
+               "amount": 250,    // type-> Integer
+               "user_name": "zeus",     // type-> String
+               "email": "zeus@gmail.com",    // type-> String
+           }
+
+
+        - response
+
+            {
+                "data": [],
+                "message": "Event booked successfully!",
+                "success": true
+
+            }
+
+
+## docker commands
+
+    1. Run docker compose file which starts kafka container
+
+       - docker-compose up -d
+
+    2. start Kafka shell
+
+       - docker exec -it zandback_kafka-1 /bin/sh
+
+    3. Create Topic
+
+       - kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic your-topic-name-here
+   
+
+ 
